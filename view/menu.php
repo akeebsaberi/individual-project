@@ -43,6 +43,9 @@
           <!--Login - all users -->
           <li class="navtop"><a href="?page=login">Login</a></li>
 
+          <!--View my cv - all users -->
+          <li class="navtop"><a href="?page=viewmycv">View My CV</a></li>
+
           <!--Logout -->
           <li class="navtop"><a href="?page=logout">Logout</a></li>
         </ul>

@@ -1,6 +1,13 @@
 <?php
 
 include_once("model/user.php");
+include_once("model/grade.php");
+include_once("model/baselocation.php");
+include_once("model/businessunit.php");
+include_once("model/project.php");
+include_once("model/education.php");
+include_once("model/usertoskill.php");
+include_once("model/employment.php");
 
 class Model {
 
@@ -86,7 +93,173 @@ class Model {
     catch (PDOException $ex) {
       echo "<p> database error occurred: <em> $ex->getMessage() </em></p>";
     }
+  }
 
+  //Function to create a corresponding user object for a given employee number
+  public function getUserDetailsByEmployeeNumber($employeeNumber) {
+    //Sanitise input
+    $employeeNumber = htmlspecialchars($employeeNumber);
+    //Prepared SQL statement
+    $query = "SELECT * from users WHERE EmployeeNumber='$employeeNumber'";
+    try {
+      $rows = $this->pdo-> query($query);
+      //Check to see if user has been found in database
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        //Create user object from user record obtained from database
+        $user=new User($row["EmployeeNumber"], $row["FirstName"], $row["Surname"], $row["Username"], $row["Password"], $row["IsResourceManager"], $row["IsAdmin"], $row["DateOfBirth"], $row["BaseLocation"], $row["LineManager"], $row["ReviewerManager"], $row["ResourceManager"], $row["BusinessUnit"], $row["Grade"]);
+        //Return user object
+        return $user;
+      }
+      //No user found, return null
+      else return null;
+    }
+    //PDO Exception
+    catch (PDOException $ex) {
+      echo "<p> database error occurred: <em> $ex->getMessage() </em></p>";
+    }
+  }
+
+  //Construct grade object from grade ID
+  public function constructGradeFromGradeID($gradeIDFromSession) {
+    $sessionGradeID = $gradeIDFromSession;
+    $query = "SELECT * FROM grades WHERE GradeID = '$sessionGradeID'";
+    try {
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        $grade = new Grade($row["GradeID"], $row["Grade"], $row["JobTitle"]);
+        return $grade;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function constructBaseLocationFromBaseLocationID($baseLocationIDFromSession) {
+    $sessionBaseLocationID = $baseLocationIDFromSession;
+    $query = "SELECT * FROM baselocations WHERE BaseLocationID = '$sessionBaseLocationID'";
+    try {
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        $baseLocation = new BaseLocation($row["BaseLocationID"], $row["Name"], $row["City"], $row["Country"]);
+        return $baseLocation;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function constructBusinessUnitFromBusinessUnitID($businessUnitIDFromSession) {
+    $sessionBusinessUnitID = $businessUnitIDFromSession;
+    $query = "SELECT * FROM businessunits WHERE BusinessUnitID = '$sessionBusinessUnitID'";
+    try {
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        $businessUnit = new BusinessUnit($row["BusinessUnitID"], $row["Unit"]);
+        return $businessUnit;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  //get all projects associated with the logged in users
+  public function getAllProjectsAssociatedWithThisUser($sessionEmployeeNumber) {
+    $query = "SELECT * FROM projects WHERE EmployeeNumber = '$sessionEmployeeNumber'";
+    try {
+      $projectsArray = array();
+      $result = $this->pdo-> query($query);
+      if ($result && $result->rowCount() > 0) {
+        foreach($result as $row) {
+          $project = new Project($row["ProjectID"], $row["EmployeeNumber"], $row["ProjectName"], $row["Customer"], $row["ProjectDescription"], $row["FromDate"], $row["ToDate"]);
+          array_push($projectsArray, $project);
+        }
+        return $projectsArray;
+      }
+      else {
+        return 0;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  //get all projects associated with the logged in users
+  public function getAllEducationAssociatedWithThisUser($sessionEmployeeNumber) {
+    $query = "SELECT * FROM education WHERE EmployeeNumber = '$sessionEmployeeNumber'";
+    try {
+      $educationArray = array();
+      $result = $this->pdo-> query($query);
+      if ($result && $result->rowCount() > 0) {
+        foreach($result as $row) {
+          $education = new Education($row["EducationID"], $row["EmployeeNumber"], $row["Subject"], $row["Level"], $row["FromDate"], $row["ToDate"]);
+          array_push($educationArray, $education);
+        }
+        return $educationArray;
+      }
+      else {
+        return 0;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function getAllSkillsAssociatedWithThisUser($sessionEmployeeNumber) {
+    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.EmployeeNumber = '$sessionEmployeeNumber'";
+    try {
+      $userToSkillsArray = array();
+      $result = $this->pdo-> query($query);
+      if ($result && $result->rowCount() > 0) {
+        foreach($result as $row) {
+          $userToSkill = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
+          array_push($userToSkillsArray, $userToSkill);
+        }
+        return $userToSkillsArray;
+      }
+      else {
+        return 0;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function getAllEmploymentAssociatedWithThisUser($sessionEmployeeNumber) {
+    $query = "SELECT * FROM employment WHERE EmployeeNumber = '$sessionEmployeeNumber'";
+    try {
+      $employmentArray = array();
+      $result = $this->pdo-> query($query);
+      if ($result && $result->rowCount() > 0) {
+        foreach($result as $row) {
+          $employment = new Employment($row["EmploymentID"], $row["EmployeeNumber"], $row["Company"], $row["FromDate"] , $row["ToDate"]);
+          array_push($employmentArray, $employment);
+        }
+        return $employmentArray;
+      }
+      else {
+        return 0;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
   }
 
 }
