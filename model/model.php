@@ -97,10 +97,8 @@ class Model {
 
   //Function to create a corresponding user object for a given employee number
   public function getUserDetailsByEmployeeNumber($employeeNumber) {
-    //Sanitise input
-    $employeeNumber = htmlspecialchars($employeeNumber);
     //Prepared SQL statement
-    $query = "SELECT * from users WHERE EmployeeNumber='$employeeNumber'";
+    $query = "SELECT * from users WHERE EmployeeNumber=$employeeNumber";
     try {
       $rows = $this->pdo-> query($query);
       //Check to see if user has been found in database
