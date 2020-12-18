@@ -46,7 +46,10 @@
           <!--View my cv - all users -->
           <li class="navtop"><a href="?page=viewmycv">View My CV</a></li>
 
-          <!--Logout -->
+          <!--Manage my cv - all users -->
+          <li class="navtop"><a href="?page=managecv">Manage My CV</a></li>
+
+          <!--Logout - all users -->
           <li class="navtop"><a href="?page=logout">Logout</a></li>
         </ul>
       </div>

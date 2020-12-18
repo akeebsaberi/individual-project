@@ -260,6 +260,96 @@ class Model {
     }
   }
 
+  public function getProjectWithHighestID() {
+    $query = "SELECT * FROM projects WHERE ProjectID = (SELECT MAX(ProjectID) FROM projects)";
+    try {
+      $maxID = 0;
+
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        $maxID = $row["ProjectID"];
+        return $maxID;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function getEducationWithHighestID() {
+    $query = "SELECT * FROM education WHERE EducationID = (SELECT MAX(EducationID) FROM education)";
+    try {
+      $maxID = 0;
+
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        $maxID = $row["EducationID"];
+        return $maxID;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function getEmploymentWithHighestID() {
+    $query = "SELECT * FROM employment WHERE EmploymentID = (SELECT MAX(EmploymentID) FROM employment)";
+    try {
+      $maxID = 0;
+
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        $maxID = $row["EmploymentID"];
+        return $maxID;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function addNewProjectToDatabase($projectID, $employeeNumber, $projectName, $customer, $projectDescription, $fromDate, $toDate) {
+    try {
+      $execute = "INSERT INTO projects (ProjectID, EmployeeNumber, ProjectName, Customer, ProjectDescription, FromDate, ToDate) VALUES ('$projectID', '$employeeNumber', '$projectName', '$customer', '$projectDescription', '$fromDate', '$toDate')";
+      $this->pdo->exec($execute);
+      echo 'Project has been added.';
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function addNewEducationToDatabase($educationID, $employeeNumber, $subject, $level, $fromDate, $toDate) {
+    try {
+      $execute = "INSERT INTO education (EducationID, EmployeeNumber, Subject, Level, FromDate, ToDate) VALUES ('$educationID', '$employeeNumber', '$subject', '$level', '$fromDate', '$toDate')";
+      $this->pdo->exec($execute);
+      echo 'Education record has been added.';
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function addEmploymentToDatabase($employmentID, $employeeNumber, $company, $fromDate, $toDate) {
+    try {
+      $execute = "INSERT INTO employment (EmploymentID, EmployeeNumber, Company, FromDate, ToDate) VALUES ('$employmentID', '$employeeNumber', '$company', '$fromDate', '$toDate')";
+      $this->pdo->exec($execute);
+      echo 'Employment record has been added.';
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
 }
 
 ?>

@@ -188,7 +188,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
 
                 <?php
                   if ($projectResult == 0) {
-                    echo 'You have no projects to display. Add some projects in the \'Manage CV\' page.';
+                    echo '<p>You have no projects to display. Add some projects in the \'Manage CV\' page.</p>';
                   }
                   else {
                 ?>
@@ -208,7 +208,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                       echo '<tr>';
                       echo '<td>' . $row->projectName . '</td>';
                       echo '<td>' . $row->customer . '</td>';
-                      echo '<td>' . $row->projectDescription . '</td>';
+                      echo '<td style="white-space:pre-wrap; word-wrap:break-word">' . $row->projectDescription . '</td>';
                       echo '<td>' . $row->fromDate . '</td>';
                       echo '<td>' . $row->toDate . '</td>';
                       echo '</tr>';
@@ -246,7 +246,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
 
                 <?php
                   if ($educationResult == 0) {
-                    echo 'You have no education records to display. Add some education records in the \'Manage CV\' page.';
+                    echo '<p>You have no education records to display. Add some education records in the \'Manage CV\' page.</p>';
                   }
                   else {
                 ?>
@@ -302,7 +302,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
 
                 <?php
                   if ($userToSkillsResult == 0) {
-                    echo 'You have no skills to display. Add some skills in the \'Manage CV\' page.';
+                    echo '<p>You have no skills to display. Add some skills in the \'Manage CV\' page.</p>';
                   }
                   else {
                 ?>
@@ -359,7 +359,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
 
                 <?php
                   if ($employmentResult == 0) {
-                    echo 'You have no employment records to display. Add some employment records in the \'Manage CV\' page.';
+                    echo '<p>You have no employment records to display. Add some employment records in the \'Manage CV\' page.</p>';
                   }
                   else {
                 ?>
