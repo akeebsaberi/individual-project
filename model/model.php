@@ -338,7 +338,7 @@ class Model {
     }
   }
 
-  public function addEmploymentToDatabase($employmentID, $employeeNumber, $company, $fromDate, $toDate) {
+  public function addNewEmploymentToDatabase($employmentID, $employeeNumber, $company, $fromDate, $toDate) {
     try {
       $execute = "INSERT INTO employment (EmploymentID, EmployeeNumber, Company, FromDate, ToDate) VALUES ('$employmentID', '$employeeNumber', '$company', '$fromDate', '$toDate')";
       $this->pdo->exec($execute);

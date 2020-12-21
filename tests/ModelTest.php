@@ -274,4 +274,121 @@ class ModelTest extends TestCase {
 
     $this->assertNull($testBusinessUnit);
   }
+
+  public function testGetAllProjectsAssociatedWithThisUser_validCount() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    //test for one project row -> 'Unit Test Project'
+    $testProjectResults = $testModel->getAllProjectsAssociatedWithThisUser(16);
+    $testProjectCount = 0;
+    foreach($testProjectResults as $row) {
+      $testProjectCount++;
+    }
+    $this->assertEquals(1, $testProjectCount);
+  }
+
+  public function testGetAllEducationAssociatedWithThisUser_validCount() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    //test for one project row -> 'Unit Test Project'
+    $testEducationResults = $testModel->getAllEducationAssociatedWithThisUser(16);
+    $testEducationCount = 0;
+    foreach($testEducationResults as $row) {
+      $testEducationCount++;
+    }
+    $this->assertEquals(2, $testEducationCount);
+  }
+
+  public function testGetAllEmploymentAssociatedWithThisUser_validCount() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    //test for one project row -> 'Unit Test Project'
+    $testEmploymentResults = $testModel->getAllEmploymentAssociatedWithThisUser(16);
+    $testEmploymentCount = 0;
+    foreach($testEmploymentResults as $row) {
+      $testEmploymentCount++;
+    }
+    $this->assertEquals(3, $testEmploymentCount);
+  }
+
+  public function testGetProjectWithHighestID_validTest() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testHighestProjectID = $testModel->getProjectWithHighestID();
+
+    $this->assertEquals(8, $testHighestProjectID);
+  }
+
+  public function testGetEducationWithHighestID_validTest() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testHighestEducationID = $testModel->getEducationWithHighestID();
+
+    $this->assertEquals(5, $testHighestEducationID);
+  }
+
+  public function testGetEmploymentWithHighestID_validTest() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testHighestEmploymentID = $testModel->getEmploymentWithHighestID();
+
+    $this->assertEquals(5, $testHighestEmploymentID);
+  }
+
+  public function testAddNewProjectToDatabase_validProject() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testModel->addNewProjectToDatabase(9, 16, "Unit Test Project 2", "Unit Test Project Customer", "This is the project test being added as part of the unit testing. Please delete this record from the database afterwards.", "2016-01-01", "2017-01-01");
+
+    $testHighestProjectID = $testModel->getProjectWithHighestID();
+
+    $this->assertEquals(9, $testHighestProjectID);
+  }
+
+  public function testAddNewEducationToDatabase_validEducation() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testModel->addNewEducationToDatabase(6, 16, "Unit Test Education 3", "Unit Test Level", "2016-01-01", "2017-01-01");
+
+    $testHighestEducationID = $testModel->getEducationWithHighestID();
+
+    $this->assertEquals(6, $testHighestEducationID);
+  }
+
+  public function testAddNewEmploymentToDatabase_validEmployment() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testModel->addNewEmploymentToDatabase(6, 16, "Unit Test Company 4", "2016-01-01", "2017-01-01");
+
+    $testHighestEmploymentID = $testModel->getEmploymentWithHighestID();
+
+    $this->assertEquals(6, $testHighestEmploymentID);
+  }
 }

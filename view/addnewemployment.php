@@ -12,7 +12,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
       echo "<br />Please fill out all required fields";
     }
     else {
-      $result = $this->model->addEmploymentToDatabase($_POST["employmentID"], $_POST["employeeNumber"], $_POST["company"], $_POST["fromDate"], $_POST["toDate"]);
+      $result = $this->model->addNewEmploymentToDatabase($_POST["employmentID"], $_POST["employeeNumber"], $_POST["company"], $_POST["fromDate"], $_POST["toDate"]);
     }
   }
 
