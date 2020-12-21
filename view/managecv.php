@@ -243,7 +243,10 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
 else {
 
 ?>
-<h1>Manage My CV</h1>
+<div class="container">
+  <h1>Manage My CV</h1>
+  <p>You are currently not logged in. Please login to manage your CV.</p>
+</div>
 
 <?php
 }
