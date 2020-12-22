@@ -18,6 +18,10 @@ class Model {
   private $password;
   private $pdo;
 
+  private $projectIDToEdit;
+  private $educationIDToEdit;
+  private $employmentIDToEdit;
+
   //Constructor for Model class
   public function __construct($server, $dbname, $username, $password) {
     $this->pdo = null;
@@ -343,6 +347,117 @@ class Model {
       $execute = "INSERT INTO employment (EmploymentID, EmployeeNumber, Company, FromDate, ToDate) VALUES ('$employmentID', '$employeeNumber', '$company', '$fromDate', '$toDate')";
       $this->pdo->exec($execute);
       echo 'Employment record has been added.';
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function editProjectDetails($projectID, $projectName, $customer, $projectDescription, $fromDate, $toDate) {
+    try {
+      $execute = "UPDATE projects SET ProjectName='$projectName', Customer='$customer', ProjectDescription='$projectDescription', FromDate='$fromDate', ToDate='$toDate' WHERE ProjectID='$projectID'";
+      $this->pdo->exec($execute);
+      echo "Updated Project Details";
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function editEducationDetails($educationID, $subject, $level, $fromDate, $toDate) {
+    try {
+      $execute = "UPDATE education SET Subject='$subject', Level='$level', FromDate='$fromDate', ToDate='$toDate' WHERE EducationID='$educationID'";
+      $this->pdo->exec($execute);
+      echo "Updated Education Details";
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function editEmploymentDetails($employmentID, $company, $fromDate, $toDate) {
+    try {
+      $execute = "UPDATE employment SET Company='$company', FromDate='$fromDate', ToDate='$toDate' WHERE EmploymentID='$employmentID'";
+      $this->pdo->exec($execute);
+      echo "Updated Employment Details";
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function getProjectToEdit() {
+    return $this->projectIDToEdit;
+  }
+
+  public function setProjectToEdit($editProjectByID) {
+    $this->projectIDToEdit = $editProjectByID;
+  }
+
+  public function getProjectToBeEdited($projectID) {
+    $projectIDToBeEdited = $projectID;
+    $query = "SELECT * FROM projects WHERE ProjectID = '$projectIDToBeEdited'";
+    try {
+      $rows = $this->pdo->query($query);
+      if ($rows && $rows->rowCount() == 1) {
+        $row=$rows->fetch();
+        $projectObject = new Project($row["ProjectID"], $row["EmployeeNumber"], $row["ProjectName"], $row["Customer"], $row["ProjectDescription"], $row["FromDate"], $row["ToDate"]);
+        return $projectObject;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function getEducationToEdit() {
+    return $this->educationIDToEdit;
+  }
+
+  public function setEducationToEdit($editEducationtByID) {
+    $this->educationIDToEdit = $editEducationtByID;
+  }
+
+  public function getEducationToBeEdited($educationID) {
+    $educationIDToBeEdited = $educationID;
+    $query = "SELECT * FROM education WHERE EducationID = '$educationIDToBeEdited'";
+    try {
+      $rows = $this->pdo->query($query);
+      if ($rows && $rows->rowCount() == 1) {
+        $row=$rows->fetch();
+        $educationObject = new Education($row["EducationID"], $row["EmployeeNumber"], $row["Subject"], $row["Level"], $row["FromDate"], $row["ToDate"]);
+        return $educationObject;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function getEmploymentToEdit() {
+    return $this->employmentIDToEdit;
+  }
+
+  public function setEmploymentToEdit($editEmploymentByID) {
+    $this->employmentIDToEdit = $editEmploymentByID;
+  }
+
+  public function getEmploymentToBeEdited($employmentID) {
+    $employmentIDToBeEdited = $employmentID;
+    $query = "SELECT * FROM employment WHERE EmploymentID = '$employmentIDToBeEdited'";
+    try {
+      $rows = $this->pdo->query($query);
+      if ($rows && $rows->rowCount() == 1) {
+        $row=$rows->fetch();
+        $employmentObject = new Employment($row["EmploymentID"], $row["EmployeeNumber"], $row["Company"], $row["FromDate"], $row["ToDate"]);
+        return $employmentObject;
+      }
     }
     catch (PDOException $ex) {
       echo  "<p>Sorry, a database error occurred. Please try again.</p>";
