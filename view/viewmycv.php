@@ -97,6 +97,11 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                   echo '</tr>';
 
                   echo '<tr>';
+                    echo '<th>Email Address</th>';
+                    echo '<td>' . $_SESSION['user']['Email'] . '</td>';
+                  echo '</tr>';
+
+                  echo '<tr>';
                     echo '<th>Date of Birth</th>';
                     echo '<td>' . $_SESSION['user']['DateOfBirth'] . '</td>';
                   echo '</tr>';

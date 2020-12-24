@@ -7,6 +7,7 @@ class User {
   private $surname = null;
   private $username = null;
   private $password = null;
+  private $email = null;
   private $isResourceManager = null;
   private $isAdmin = null;
   private $dateOfBirth = null;
@@ -18,12 +19,13 @@ class User {
   private $grade = null;
 
   //Instantiates a user object with the given user details on successful authentication
-  public function __construct($employeeNumber, $firstName, $surname, $username, $password, $isResourceManager, $isAdmin, $dateOfBirth, $baseLocation, $lineManager, $reviewerManager, $resourceManager, $businessUnit, $grade) {
+  public function __construct($employeeNumber, $firstName, $surname, $username, $password, $email, $isResourceManager, $isAdmin, $dateOfBirth, $baseLocation, $lineManager, $reviewerManager, $resourceManager, $businessUnit, $grade) {
     $this->employeeNumber = $employeeNumber;
     $this->firstName = $firstName;
     $this->surname = $surname;
     $this->username = $username;
     $this->password = $password;
+    $this->email = $email;
     $this->isResourceManager = $isResourceManager;
     $this->isAdmin = $isAdmin;
     $this->dateOfBirth = $dateOfBirth;
