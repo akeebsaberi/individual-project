@@ -58,13 +58,14 @@ class Model {
         //Check to see if correct password has been entered
         if (password_verify($password, $row["Password"])) {
           //Password correct, create user object
-          $user=new User($row["EmployeeNumber"], $row["FirstName"], $row["Surname"], $row["Username"], $row["Password"], $row["IsResourceManager"], $row["IsAdmin"], $row["DateOfBirth"], $row["BaseLocation"], $row["LineManager"], $row["ReviewerManager"], $row["ResourceManager"], $row["BusinessUnit"], $row["Grade"]);
+          $user=new User($row["EmployeeNumber"], $row["FirstName"], $row["Surname"], $row["Username"], $row["Password"], $row["Email"], $row["IsResourceManager"], $row["IsAdmin"], $row["DateOfBirth"], $row["BaseLocation"], $row["LineManager"], $row["ReviewerManager"], $row["ResourceManager"], $row["BusinessUnit"], $row["Grade"]);
           //Set session variables for authenticated user
           $_SESSION['user']['EmployeeNumber'] = $user->employeeNumber;
           $_SESSION['user']['FirstName'] = $user->firstName;
           $_SESSION['user']['Surname'] = $user->surname;
           $_SESSION['user']['Username'] = $user->username;
           $_SESSION['user']['Password'] = $user->password;
+          $_SESSION['user']['Email'] = $user->email;
           $_SESSION['user']['IsResourceManager'] = $user->isResourceManager;
           $_SESSION['user']['IsAdmin'] = $user->isAdmin;
           $_SESSION['user']['DateOfBirth'] = $user->dateOfBirth;
@@ -109,7 +110,7 @@ class Model {
       if ($rows && $rows->rowCount() ==1) {
         $row=$rows->fetch();
         //Create user object from user record obtained from database
-        $user=new User($row["EmployeeNumber"], $row["FirstName"], $row["Surname"], $row["Username"], $row["Password"], $row["IsResourceManager"], $row["IsAdmin"], $row["DateOfBirth"], $row["BaseLocation"], $row["LineManager"], $row["ReviewerManager"], $row["ResourceManager"], $row["BusinessUnit"], $row["Grade"]);
+        $user=new User($row["EmployeeNumber"], $row["FirstName"], $row["Surname"], $row["Username"], $row["Password"], $row["Email"], $row["IsResourceManager"], $row["IsAdmin"], $row["DateOfBirth"], $row["BaseLocation"], $row["LineManager"], $row["ReviewerManager"], $row["ResourceManager"], $row["BusinessUnit"], $row["Grade"]);
         //Return user object
         return $user;
       }

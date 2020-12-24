@@ -23,6 +23,7 @@ class ModelTest extends TestCase {
     $this->assertEquals('test', $testUser1->surname);
     $this->assertEquals('unittest', $testUser1->username);
     $this->assertTrue(password_verify('unittestpassword', $testUser1->password));
+    $this->assertEquals('unit.test@unittest.com', $testUser1->email);
     $this->assertEquals(1, $testUser1->isResourceManager);
     $this->assertEquals(1, $testUser1->isAdmin);
     $this->assertEquals('2000-01-01', $testUser1->dateOfBirth);
@@ -48,6 +49,7 @@ class ModelTest extends TestCase {
     $this->assertEquals('test', $_SESSION['user']['Surname']);
     $this->assertEquals('unittest', $_SESSION['user']['Username']);
     $this->assertTrue(password_verify('unittestpassword', $_SESSION['user']['Password']));
+    $this->assertEquals('unit.test@unittest.com', $_SESSION['user']['Email']);
     $this->assertEquals(1, $_SESSION['user']['IsResourceManager']);
     $this->assertEquals(1, $_SESSION['user']['IsAdmin']);
     $this->assertEquals('2000-01-01', $_SESSION['user']['DateOfBirth']);
@@ -168,6 +170,7 @@ class ModelTest extends TestCase {
     $this->assertEquals('test', $testUser->surname);
     $this->assertEquals('unittest', $testUser->username);
     $this->assertTrue(password_verify('unittestpassword', $testUser->password));
+    $this->assertEquals('unit.test@unittest.com', $testUser->email);
     $this->assertEquals(1, $testUser->isResourceManager);
     $this->assertEquals(1, $testUser->isAdmin);
     $this->assertEquals('2000-01-01', $testUser->dateOfBirth);
