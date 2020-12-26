@@ -394,4 +394,59 @@ class ModelTest extends TestCase {
 
     $this->assertEquals(6, $testHighestEmploymentID);
   }
+
+  public function testEditProjectDetails_validEdit() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testModel->editProjectDetails(9, "Edited Unit Test Project 2", "Edited Unit Test Project Customer", "This is the project test being edited as part of the unit testing. Please delete this record from the database afterwards.", "2016-02-03", "2017-02-03");
+
+    $editedTestProject = $testModel->getProjectToBeEdited(9);
+
+    $this->assertEquals(9, $editedTestProject->projectID);
+    $this->assertEquals(16, $editedTestProject->employeeNumber);
+    $this->assertEquals("Edited Unit Test Project 2", $editedTestProject->projectName);
+    $this->assertEquals("Edited Unit Test Project Customer", $editedTestProject->customer);
+    $this->assertEquals("This is the project test being edited as part of the unit testing. Please delete this record from the database afterwards.", $editedTestProject->projectDescription);
+    $this->assertEquals("2016-02-03", $editedTestProject->fromDate);
+    $this->assertEquals("2017-02-03", $editedTestProject->toDate);
+  }
+
+  public function testEditEducationDetails_validEdit() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testModel->editEducationDetails(6, "Edited Unit Test Education 3", "Edited Unit Test Level", "2016-02-03", "2017-02-03");
+
+    $editedTestEducation = $testModel->getEducationToBeEdited(6);
+
+    $this->assertEquals(6, $editedTestEducation->educationID);
+    $this->assertEquals(16, $editedTestEducation->employeeNumber);
+    $this->assertEquals("Edited Unit Test Education 3", $editedTestEducation->subject);
+    $this->assertEquals("Edited Unit Test Level", $editedTestEducation->level);
+    $this->assertEquals("2016-02-03", $editedTestEducation->fromDate);
+    $this->assertEquals("2017-02-03", $editedTestEducation->toDate);
+  }
+
+  public function testEditEmploymentDetails_validEdit() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testModel->editEmploymentDetails(6, "Edited Unit Test Company 4", "2016-02-03", "2017-02-03");
+
+    $editedTestEmployment = $testModel->getEmploymentToBeEdited(6);
+
+    $this->assertEquals(6, $editedTestEmployment->employmentID);
+    $this->assertEquals(16, $editedTestEmployment->employeeNumber);
+    $this->assertEquals("Edited Unit Test Company 4", $editedTestEmployment->company);
+    $this->assertEquals("2016-02-03", $editedTestEmployment->fromDate);
+    $this->assertEquals("2017-02-03", $editedTestEmployment->toDate);
+  }
+
 }
