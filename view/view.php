@@ -35,6 +35,27 @@ class View {
         $this->model->setEmploymentToEdit($extractedQueryString);
         $this->page = "view/editemployment.php";
       }
+      else if (strpos($_GET["page"], 'deleteproject') !== false) {
+        $queryString = $_GET["page"];
+        $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
+        $extractedQueryString = $extractedQueryString + 0;
+        $this->model->setProjectToDelete($extractedQueryString);
+        $this->page = "view/deleteproject.php";
+      }
+      else if (strpos($_GET["page"], 'deleteeducation') !== false) {
+        $queryString = $_GET["page"];
+        $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
+        $extractedQueryString = $extractedQueryString + 0;
+        $this->model->setEducationToDelete($extractedQueryString);
+        $this->page = "view/deleteeducation.php";
+      }
+      else if (strpos($_GET["page"], 'deleteemployment') !== false) {
+        $queryString = $_GET["page"];
+        $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
+        $extractedQueryString = $extractedQueryString + 0;
+        $this->model->setEmploymentToDelete($extractedQueryString);
+        $this->page = "view/deleteemployment.php";
+      }
       else {
         $this->page = "view/" . $_GET["page"] . ".php";
       }

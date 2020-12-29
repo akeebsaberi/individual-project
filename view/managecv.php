@@ -51,6 +51,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th></th>
+                    <th></th>
                   </tr>
                   <?php
                   foreach($projectResult as $row) {
@@ -61,6 +62,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                     echo '<td>' . $row->fromDate . '</td>';
                     echo '<td>' . $row->toDate . '</td>';
                     echo '<td><a href="?page=editproject?' . $row->projectID . '">Edit</a></td>';
+                    echo '<td><a href="?page=deleteproject?' . $row->projectID . '">Delete</a></td>';
                     echo '</tr>';
                   }
                   echo '</table>';
@@ -107,6 +109,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                       <th>Start Date</th>
                       <th>End Date</th>
                       <th></th>
+                      <th></th>
                     </tr>
                   <?php
                   foreach($educationResult as $row) {
@@ -116,6 +119,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                     echo '<td>' . $row->fromDate . '</td>';
                     echo '<td>' . $row->toDate . '</td>';
                     echo '<td><a href="?page=editeducation?' . $row->educationID . '">Edit</a></td>';
+                    echo '<td><a href="?page=deleteeducation?' . $row->educationID . '">Delete</a></td>';
                     echo '</tr>';
                   }
                   echo '</table>';
@@ -163,6 +167,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                       <th>Competency Level</th>
                       <th>Experience In Years</th>
                       <th></th>
+                      <th></th>
                     </tr>
                     <?php
                     foreach($userToSkillsResult as $row) {
@@ -173,6 +178,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                       echo '<td>' . $row->competencyLevel . '</td>';
                       echo '<td>' . $row->experienceInYears . '</td>';
                       echo '<td><a href="?page=editusertoskill?' . $row->userToSkillID . '">Edit</a></td>';
+                      echo '<td><a href="?page=deleteusertoskill?' . $row->userToSkillID . '">Delete</a></td>';
                       echo '</tr>';
                     }
                   }
@@ -217,6 +223,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                       <th>Start Date</th>
                       <th>End Date</th>
                       <th></th>
+                      <th></th>
                     </tr>
                   <?php
                   foreach($employmentResult as $row) {
@@ -225,6 +232,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
                     echo '<td>' . $row->fromDate . '</td>';
                     echo '<td>' . $row->toDate . '</td>';
                     echo '<td><a href="?page=editemployment?' . $row->employmentID . '">Edit</a></td>';
+                    echo '<td><a href="?page=deleteemployment?' . $row->employmentID . '">Delete</a></td>';
                     echo '</tr>';
                   }
                 }
@@ -242,7 +250,6 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
   </div>
 
   </main>
-
 
 <?php
 }
