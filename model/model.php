@@ -22,6 +22,10 @@ class Model {
   private $educationIDToEdit;
   private $employmentIDToEdit;
 
+  private $projectIDToDelete;
+  private $educationIDToDelete;
+  private $employmentIDToDelete;
+
   //Constructor for Model class
   public function __construct($server, $dbname, $username, $password) {
     $this->pdo = null;
@@ -463,6 +467,129 @@ class Model {
     catch (PDOException $ex) {
       echo  "<p>Sorry, a database error occurred. Please try again.</p>";
       echo $ex->getMessage();
+    }
+  }
+
+  public function deleteProjectByProjectID($projectID) {
+    try {
+      if(is_numeric($projectID)) {
+        $projectIDToDelete = $projectID;
+        $execute = "DELETE FROM projects WHERE ProjectID = '$projectIDToDelete'";
+        $this->pdo->exec($execute);
+        echo 'Deleted Project Record';
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function deleteEducationByEducationID($educationID) {
+    try {
+      if(is_numeric($educationID)) {
+        $educationIDToDelete = $educationID;
+        $execute = "DELETE FROM education WHERE EducationID = '$educationIDToDelete'";
+        $this->pdo->exec($execute);
+        echo 'Deleted Education Record';
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function deleteEmploymentByEmploymentID($employmentID) {
+    try {
+      if(is_numeric($employmentID)) {
+        $employmentIDToDelete = $employmentID;
+        $execute = "DELETE FROM employment WHERE EmploymentID = '$employmentIDToDelete'";
+        $this->pdo->exec($execute);
+        echo 'Deleted Employment Record';
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function setProjectToDelete($deleteProjectByID) {
+    $this->projectIDToDelete = $deleteProjectByID;
+  }
+
+  public function getProjectToDelete() {
+    return $this->projectIDToDelete;
+  }
+
+  public function setEducationToDelete($deleteEducationByID) {
+    $this->educationIDToDelete = $deleteEducationByID;
+  }
+
+  public function getEducationToDelete() {
+    return $this->educationIDToDelete;
+  }
+
+  public function setEmploymentToDelete($deleteEmploymentByID) {
+    $this->employmentIDToDelete = $deleteEmploymentByID;
+  }
+
+  public function getEmploymentToDelete() {
+    return $this->employmentIDToDelete;
+  }
+
+  public function getProjectByProjectID($projectID) {
+    if (is_numeric($projectID)) {
+      $query = "SELECT * FROM projects WHERE ProjectID = $projectID";
+      try {
+        $rows = $this->pdo->query($query);
+        if ($rows && $rows->rowCount() == 1) {
+          $row=$rows->fetch();
+          $projectObject = new Project($row["ProjectID"], $row["EmployeeNumber"], $row["ProjectName"], $row["Customer"], $row["ProjectDescription"], $row["FromDate"], $row["ToDate"]);
+          return $projectObject;
+        }
+      }
+      catch (PDOException $ex) {
+        echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+        echo $ex->getMessage();
+      }
+    }
+  }
+
+  public function getEducationByEducationID($educationID) {
+    if (is_numeric($educationID)) {
+      $query = "SELECT * FROM education WHERE EducationID = $educationID";
+      try {
+        $rows = $this->pdo->query($query);
+        if ($rows && $rows->rowCount() == 1) {
+          $row=$rows->fetch();
+          $educationObject = new Education($row["EducationID"], $row["EmployeeNumber"], $row["Subject"], $row["Level"], $row["FromDate"], $row["ToDate"]);
+          return $educationObject;
+        }
+      }
+      catch (PDOException $ex) {
+        echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+        echo $ex->getMessage();
+      }
+    }
+  }
+
+  public function getEmploymentByEmploymentID($employmentID) {
+    if (is_numeric($employmentID)) {
+      $query = "SELECT * FROM employment WHERE EmploymentID = $employmentID";
+      try {
+        $rows = $this->pdo->query($query);
+        if ($rows && $rows->rowCount() == 1) {
+          $row=$rows->fetch();
+          $employmentObject = new Employment($row["EmploymentID"], $row["EmployeeNumber"], $row["Company"], $row["FromDate"], $row["ToDate"]);
+          return $employmentObject;
+        }
+      }
+      catch (PDOException $ex) {
+        echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+        echo $ex->getMessage();
+      }
     }
   }
 
