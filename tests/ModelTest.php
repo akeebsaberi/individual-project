@@ -449,4 +449,55 @@ class ModelTest extends TestCase {
     $this->assertEquals("2017-02-03", $editedTestEmployment->toDate);
   }
 
+  public function testDeleteProjectByProjectID_validDelete() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testHighestProjectID = $testModel->getProjectWithHighestID();
+
+    $this->assertEquals(9, $testHighestProjectID);
+
+    $testModel->deleteProjectByProjectID(9);
+
+    $testHighestProjectID = $testModel->getProjectWithHighestID();
+
+    $this->assertEquals(8, $testHighestProjectID);
+  }
+
+  public function testDeleteEducationByEducationID_validDelete() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testHighestEducationID = $testModel->getEducationWithHighestID();
+
+    $this->assertEquals(6, $testHighestEducationID);
+
+    $testModel->deleteEducationByEducationID(6);
+
+    $testHighestEducationID = $testModel->getEducationWithHighestID();
+
+    $this->assertEquals(5, $testHighestEducationID);
+  }
+
+  public function testDeleteEmploymentByEmploymentID_validDelete() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel->connect();
+
+    $testHighestEmploymentID = $testModel->getEmploymentWithHighestID();
+
+    $this->assertEquals(6, $testHighestEmploymentID);
+
+    $testModel->deleteEmploymentByEmploymentID(6);
+
+    $testHighestEmploymentID = $testModel->getEmploymentWithHighestID();
+
+    $this->assertEquals(5, $testHighestEmploymentID);
+  }
+
 }
