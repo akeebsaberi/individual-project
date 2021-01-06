@@ -28,6 +28,13 @@ class View {
         $this->model->setEducationToEdit($extractedQueryString);
         $this->page = "view/editeducation.php";
       }
+      else if (strpos($_GET["page"], 'editusertoskill') !== false) {
+        $queryString = $_GET["page"];
+        $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
+        $extractedQueryString = $extractedQueryString + 0;
+        $this->model->setUserToSkillToEdit($extractedQueryString);
+        $this->page = "view/editusertoskill.php";
+      }
       else if (strpos($_GET["page"], 'editemployment') !== false) {
         $queryString = $_GET["page"];
         $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
@@ -48,6 +55,13 @@ class View {
         $extractedQueryString = $extractedQueryString + 0;
         $this->model->setEducationToDelete($extractedQueryString);
         $this->page = "view/deleteeducation.php";
+      }
+      else if (strpos($_GET["page"], 'deleteusertoskill') !== false) {
+        $queryString = $_GET["page"];
+        $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
+        $extractedQueryString = $extractedQueryString + 0;
+        $this->model->setUserToSkillToDelete($extractedQueryString);
+        $this->page = "view/deleteusertoskill.php";
       }
       else if (strpos($_GET["page"], 'deleteemployment') !== false) {
         $queryString = $_GET["page"];

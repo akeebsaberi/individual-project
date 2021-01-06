@@ -20,10 +20,12 @@ class Model {
 
   private $projectIDToEdit;
   private $educationIDToEdit;
+  private $userToSkillIDToEdit;
   private $employmentIDToEdit;
 
   private $projectIDToDelete;
   private $educationIDToDelete;
+  private $userToSkillIDToDelete;
   private $employmentIDToDelete;
 
   //Constructor for Model class
@@ -305,6 +307,24 @@ class Model {
     }
   }
 
+  public function getUserToSkillWithHighestID() {
+    $query = "SELECT * FROM userstoskills WHERE UserToSkillID = (SELECT MAX(UserToSkillID) FROM userstoskills)";
+    try {
+      $maxID = 0;
+
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() ==1) {
+        $row=$rows->fetch();
+        $maxID = $row["UserToSkillID"];
+        return $maxID;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
   public function getEmploymentWithHighestID() {
     $query = "SELECT * FROM employment WHERE EmploymentID = (SELECT MAX(EmploymentID) FROM employment)";
     try {
@@ -347,6 +367,30 @@ class Model {
     }
   }
 
+  public function addNewUserToSkillToDatabase($userToSkillID, $employeeNumber, $skillName, $isCoreSkill, $competencyLevel, $experienceInYears) {
+    $query = "SELECT * FROM skills WHERE SkillName = '$skillName'";
+    try {
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() == 1) {
+        $row=$rows->fetch();
+        $skillIDFromDatabase = $row["SkillID"];
+
+        $execute = "INSERT INTO userstoskills (UserToSkillID, EmployeeNumber, SkillID, IsCoreSkill, CompetencyLevel, ExperienceInYears) VALUES ('$userToSkillID', '$employeeNumber', '$skillIDFromDatabase', '$isCoreSkill', '$competencyLevel', '$experienceInYears')";
+        $this->pdo->exec($execute);
+        echo 'Skill record has been added.';
+      }
+      else {
+        echo '<div class="container">';
+        echo '<p>Sorry, an error has occurred. Please ensure you have selected the skill from the dropdown</p>';
+        echo '</div>';
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
   public function addNewEmploymentToDatabase($employmentID, $employeeNumber, $company, $fromDate, $toDate) {
     try {
       $execute = "INSERT INTO employment (EmploymentID, EmployeeNumber, Company, FromDate, ToDate) VALUES ('$employmentID', '$employeeNumber', '$company', '$fromDate', '$toDate')";
@@ -376,6 +420,30 @@ class Model {
       $execute = "UPDATE education SET Subject='$subject', Level='$level', FromDate='$fromDate', ToDate='$toDate' WHERE EducationID='$educationID'";
       $this->pdo->exec($execute);
       echo "Updated Education Details";
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
+  public function editUserToSkillDetails($userToSkillID, $employeeNumber, $skillName, $isCoreSkill, $competencyLevel, $experienceInYears) {
+    $query = "SELECT * FROM skills WHERE SkillName = '$skillName'";
+    try {
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() == 1) {
+        $row=$rows->fetch();
+        $skillIDFromDatabase = $row["SkillID"];
+
+        $execute = "UPDATE userstoskills SET SkillID='$skillIDFromDatabase', IsCoreSkill='$isCoreSkill', CompetencyLevel='$competencyLevel', ExperienceInYears='$experienceInYears' WHERE UserToSkillID='$userToSkillID'";
+        $this->pdo->exec($execute);
+        echo "Updated Skill Details";
+      }
+      else {
+        echo '<div class="container">';
+        echo '<p>Sorry, an error has occurred. Please ensure you have selected the skill from the dropdown</p>';
+        echo '</div>';
+      }
     }
     catch (PDOException $ex) {
       echo  "<p>Sorry, a database error occurred. Please try again.</p>";
@@ -445,6 +513,34 @@ class Model {
     }
   }
 
+  public function setUserToSkillToEdit($editUserToSkillByID) {
+    $this->userToSkillIDToEdit = $editUserToSkillByID;
+  }
+
+  public function getUserToSkillToEdit() {
+    return $this->userToSkillIDToEdit;
+  }
+
+  public function getUserToSkillToBeEdited($userToSkillID) {
+    $userToSkillIDToBeEdited = $userToSkillID;
+    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.UserToSkillID = '$userToSkillIDToBeEdited'";
+    try {
+      $rows = $this->pdo->query($query);
+      if ($rows && $rows->rowCount() == 1) {
+        $row=$rows->fetch();
+        $userToSkillObject = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
+        return $userToSkillObject;
+      }
+      else {
+        return null;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
   public function getEmploymentToEdit() {
     return $this->employmentIDToEdit;
   }
@@ -500,6 +596,21 @@ class Model {
     }
   }
 
+  public function deleteUserToSkillByUserToSkillID($userToSkillID) {
+    try {
+      if(is_numeric($userToSkillID)) {
+        $userToSkillIDToDelete = $userToSkillID;
+        $execute = "DELETE FROM userstoskills WHERE UserToSkillID = '$userToSkillIDToDelete'";
+        $this->pdo->exec($execute);
+        echo 'Deleted Skill Record';
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
   public function deleteEmploymentByEmploymentID($employmentID) {
     try {
       if(is_numeric($employmentID)) {
@@ -529,6 +640,14 @@ class Model {
 
   public function getEducationToDelete() {
     return $this->educationIDToDelete;
+  }
+
+  public function setUserToSkillToDelete($deleteUserToSkillByID) {
+    $this->userToSkillIDToDelete = $deleteUserToSkillByID;
+  }
+
+  public function getUserToSkillToDelete() {
+    return $this->userToSkillIDToDelete;
   }
 
   public function setEmploymentToDelete($deleteEmploymentByID) {
@@ -566,6 +685,24 @@ class Model {
           $row=$rows->fetch();
           $educationObject = new Education($row["EducationID"], $row["EmployeeNumber"], $row["Subject"], $row["Level"], $row["FromDate"], $row["ToDate"]);
           return $educationObject;
+        }
+      }
+      catch (PDOException $ex) {
+        echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+        echo $ex->getMessage();
+      }
+    }
+  }
+
+  public function getUserToSkillByUserToSkillID($userToSkillID) {
+    if (is_numeric($userToSkillID)) {
+      $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.UserToSkillID = '$userToSkillID'";
+      try {
+        $rows = $this->pdo->query($query);
+        if ($rows && $rows->rowCount() == 1) {
+          $row=$rows->fetch();
+          $userToSkillObject = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
+          return $userToSkillObject;
         }
       }
       catch (PDOException $ex) {
