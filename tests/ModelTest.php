@@ -11,7 +11,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //16, admin, test, unittest, unittestpassword, 1, 1, 2000-01-01, 1, 1, 2, 3, 1, 1
@@ -39,7 +39,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel2 = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel2 = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel2->connect();
 
     $testUser2 = $testModel2->getUserByUsernameAndPassword('unittest', 'unittestpassword');
@@ -65,7 +65,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testUser = $testModel->getUserByUsernameAndPassword('invalidusername', 'unittestpassword');
@@ -78,7 +78,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testUser = $testModel->getUserByUsernameAndPassword('unittest', 'invalidpassword');
@@ -91,7 +91,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testUser = $testModel->getUserByUsernameAndPassword('invalidusername', 'invalidpassword');
@@ -104,7 +104,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testUser = $testModel->getUserByUsernameAndPassword('', '');
@@ -115,7 +115,7 @@ class ModelTest extends TestCase {
 
   /*
   public function testLogout() {
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testUser = $testModel->getUserByUsernameAndPassword('unittest', 'unittestpassword');
@@ -160,7 +160,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testUser = $testModel->getUserDetailsByEmployeeNumber(16);
@@ -186,7 +186,7 @@ class ModelTest extends TestCase {
     require_once 'model\user.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testUser = $testModel->getUserDetailsByEmployeeNumber(1000);
@@ -198,7 +198,7 @@ class ModelTest extends TestCase {
     require_once 'model\grade.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //Should be ID = 13, Grade = P6, Job Title = Lead Project Manager
@@ -213,7 +213,7 @@ class ModelTest extends TestCase {
     require_once 'model\grade.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //Should be null
@@ -226,7 +226,7 @@ class ModelTest extends TestCase {
     require_once 'model\baselocation.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //Should be ID = 2, Location Name = Canary Wharf, City = London, Country = England
@@ -242,7 +242,7 @@ class ModelTest extends TestCase {
     require_once 'model\baselocation.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //Should be null
@@ -255,7 +255,7 @@ class ModelTest extends TestCase {
     require_once 'model\businessunit.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //Should be ID = 1, Unit = Front End Webapp Development
@@ -269,7 +269,7 @@ class ModelTest extends TestCase {
     require_once 'model\businessunit.php';
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //Should be null
@@ -281,7 +281,7 @@ class ModelTest extends TestCase {
   public function testGetAllProjectsAssociatedWithThisUser_validCount() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //test for one project row -> 'Unit Test Project'
@@ -296,7 +296,7 @@ class ModelTest extends TestCase {
   public function testGetAllEducationAssociatedWithThisUser_validCount() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //test for one project row -> 'Unit Test Project'
@@ -311,7 +311,7 @@ class ModelTest extends TestCase {
   public function testGetAllEmploymentAssociatedWithThisUser_validCount() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     //test for one project row -> 'Unit Test Project'
@@ -326,7 +326,7 @@ class ModelTest extends TestCase {
   public function testGetProjectWithHighestID_validTest() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testHighestProjectID = $testModel->getProjectWithHighestID();
@@ -337,7 +337,7 @@ class ModelTest extends TestCase {
   public function testGetEducationWithHighestID_validTest() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testHighestEducationID = $testModel->getEducationWithHighestID();
@@ -348,7 +348,7 @@ class ModelTest extends TestCase {
   public function testGetEmploymentWithHighestID_validTest() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testHighestEmploymentID = $testModel->getEmploymentWithHighestID();
@@ -359,7 +359,7 @@ class ModelTest extends TestCase {
   public function testAddNewProjectToDatabase_validProject() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testModel->addNewProjectToDatabase(9, 16, "Unit Test Project 2", "Unit Test Project Customer", "This is the project test being added as part of the unit testing. Please delete this record from the database afterwards.", "2016-01-01", "2017-01-01");
@@ -372,7 +372,7 @@ class ModelTest extends TestCase {
   public function testAddNewEducationToDatabase_validEducation() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testModel->addNewEducationToDatabase(6, 16, "Unit Test Education 3", "Unit Test Level", "2016-01-01", "2017-01-01");
@@ -385,7 +385,7 @@ class ModelTest extends TestCase {
   public function testAddNewEmploymentToDatabase_validEmployment() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testModel->addNewEmploymentToDatabase(6, 16, "Unit Test Company 4", "2016-01-01", "2017-01-01");
@@ -398,7 +398,7 @@ class ModelTest extends TestCase {
   public function testEditProjectDetails_validEdit() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testModel->editProjectDetails(9, "Edited Unit Test Project 2", "Edited Unit Test Project Customer", "This is the project test being edited as part of the unit testing. Please delete this record from the database afterwards.", "2016-02-03", "2017-02-03");
@@ -417,7 +417,7 @@ class ModelTest extends TestCase {
   public function testEditEducationDetails_validEdit() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testModel->editEducationDetails(6, "Edited Unit Test Education 3", "Edited Unit Test Level", "2016-02-03", "2017-02-03");
@@ -435,7 +435,7 @@ class ModelTest extends TestCase {
   public function testEditEmploymentDetails_validEdit() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testModel->editEmploymentDetails(6, "Edited Unit Test Company 4", "2016-02-03", "2017-02-03");
@@ -452,7 +452,7 @@ class ModelTest extends TestCase {
   public function testDeleteProjectByProjectID_validDelete() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testHighestProjectID = $testModel->getProjectWithHighestID();
@@ -469,7 +469,7 @@ class ModelTest extends TestCase {
   public function testDeleteEducationByEducationID_validDelete() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testHighestEducationID = $testModel->getEducationWithHighestID();
@@ -486,7 +486,7 @@ class ModelTest extends TestCase {
   public function testDeleteEmploymentByEmploymentID_validDelete() {
     require_once 'model\model.php';
 
-    $testModel = new Model("127.0.0.1", "individual_project_db", "root", "");
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
     $testModel->connect();
 
     $testHighestEmploymentID = $testModel->getEmploymentWithHighestID();
@@ -498,6 +498,79 @@ class ModelTest extends TestCase {
     $testHighestEmploymentID = $testModel->getEmploymentWithHighestID();
 
     $this->assertEquals(5, $testHighestEmploymentID);
+  }
+
+  public function testgetAllSkillsAssociatedWithThisUser_validCount() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $testSkillResults = $testModel->getAllSkillsAssociatedWithThisUser(16);
+    $testSkillCount = 0;
+    foreach($testSkillResults as $row) {
+      $testSkillCount++;
+    }
+    $this->assertEquals(2, $testSkillCount);
+  }
+
+  public function testGetUserToSkillWithHighestID_validTest() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $testHighestUserToSkillID = $testModel->getUserToSkillWithHighestID();
+
+    $this->assertEquals(13, $testHighestUserToSkillID);
+  }
+
+  public function testaddNewUserToSkillToDatabase_validUserToSkill() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $testModel->addNewUserToSkillToDatabase(14, 16, "HyperText Markup Language (HTML)", 0, 4, 5);
+
+    $testHighestProjectID = $testModel->getUserToSkillWithHighestID();
+
+    $this->assertEquals(14, $testHighestProjectID);
+  }
+
+  public function testEditUserToSkillDetails_validEdit() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $testModel->editUserToSkillDetails(14, 16, "HyperText Markup Language (HTML)", 1, 4, 5);
+
+    $editedTestUserToSkill = $testModel->getUserToSkillToBeEdited(14);
+
+    $this->assertEquals(14, $editedTestUserToSkill->userToSkillID);
+    $this->assertEquals(16, $editedTestUserToSkill->employeeNumber);
+    $this->assertEquals("HyperText Markup Language (HTML)", $editedTestUserToSkill->skillName);
+    $this->assertEquals(1, $editedTestUserToSkill->isCoreSkill);
+    $this->assertEquals(4, $editedTestUserToSkill->competencyLevel);
+    $this->assertEquals(5, $editedTestUserToSkill->experienceInYears);
+  }
+
+  public function testDeleteUserToSkillByUserToSkillID_validDelete() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $testHighestUserToSkillID = $testModel->getUserToSkillWithHighestID();
+
+    $this->assertEquals(14, $testHighestUserToSkillID);
+
+    $testModel->deleteUserToSkillByUserToSkillID(14);
+
+    $testHighestUserToSkillID = $testModel->getUserToSkillWithHighestID();
+
+    $this->assertEquals(13, $testHighestUserToSkillID);
   }
 
 }
