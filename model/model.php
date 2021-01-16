@@ -28,6 +28,8 @@ class Model {
   private $userToSkillIDToDelete;
   private $employmentIDToDelete;
 
+  private $employeeIDToView;
+
   //Constructor for Model class
   public function __construct($server, $dbname, $username, $password) {
     $this->pdo = null;
@@ -728,6 +730,14 @@ class Model {
         echo $ex->getMessage();
       }
     }
+  }
+
+  public function setEmployeeIDToView($employeeID) {
+    $this->employeeIDToView = $employeeID;
+  }
+
+  public function getEmployeeIDToView() {
+    return $this->employeeIDToView;
   }
 
 }

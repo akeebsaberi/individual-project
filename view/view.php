@@ -70,6 +70,13 @@ class View {
         $this->model->setEmploymentToDelete($extractedQueryString);
         $this->page = "view/deleteemployment.php";
       }
+      else if (strpos($_GET["page"], 'viewuserbyusername') !== false) {
+        $queryString = $_GET["page"];
+        $queryString = substr($queryString, strpos($queryString, "?") + 1);
+        $queryString = $queryString + 0;
+        $this->model->setEmployeeIDToView($queryString);
+        $this->page = "view/viewuserbyusername.php";
+      }
       else {
         $this->page = "view/" . $_GET["page"] . ".php";
       }
