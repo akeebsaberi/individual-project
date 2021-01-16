@@ -49,6 +49,9 @@
           <!--Manage my cv - all users -->
           <li class="navtop"><a href="?page=managecv">Manage My CV</a></li>
 
+          <!--View records of all the users on the bench - reviewer manager -->
+          <li class="navtop"><a href="?page=searchemployee">Search For Employee</a></li>
+
           <!--Logout - all users -->
           <li class="navtop"><a href="?page=logout">Logout</a></li>
         </ul>
