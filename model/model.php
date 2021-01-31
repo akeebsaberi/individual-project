@@ -628,6 +628,28 @@ class Model {
     }
   }
 
+  public function getUserToSkillArrayByAdvancedSkillSearch($skillName, $minimumExperienceInYears, $competencyLevel) {
+    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE s.SkillName = '$skillName' AND CompetencyLevel = '$competencyLevel' AND ExperienceInYears >= '$minimumExperienceInYears'";
+    try {
+      $usersToSkillsArray = array();
+      $rows = $this->pdo-> query($query);
+      if ($rows && $rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+          $usertoskill = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
+          array_push($usersToSkillsArray, $usertoskill);
+        }
+          return $usersToSkillsArray;
+      }
+      else {
+        return 0;
+      }
+    }
+    catch (PDOException $ex) {
+      echo  "<p>Sorry, a database error occurred. Please try again.</p>";
+      echo $ex->getMessage();
+    }
+  }
+
   public function setProjectToDelete($deleteProjectByID) {
     $this->projectIDToDelete = $deleteProjectByID;
   }
