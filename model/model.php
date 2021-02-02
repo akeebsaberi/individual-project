@@ -55,11 +55,10 @@ class Model {
     //Sanitise inputs
     $username = htmlspecialchars($username);
     $password = htmlspecialchars($password);
-    //Prepared SQL statement
-    $query = "SELECT * FROM users WHERE Username='$username'";
     //Run query to search for user by username
     try {
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare("SELECT * FROM users WHERE Username = ?");
+      $rows->execute([$username]);
       //Check to see if user has been found in database
       if ($rows && $rows->rowCount() == 1) {
         $row=$rows->fetch();
@@ -111,9 +110,9 @@ class Model {
   //Function to create a corresponding user object for a given employee number
   public function getUserDetailsByEmployeeNumber($employeeNumber) {
     //Prepared SQL statement
-    $query = "SELECT * from users WHERE EmployeeNumber=$employeeNumber";
     try {
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare("SELECT * from users WHERE EmployeeNumber = ?");
+      $rows->execute([$employeeNumber]);
       //Check to see if user has been found in database
       if ($rows && $rows->rowCount() ==1) {
         $row=$rows->fetch();
@@ -134,9 +133,10 @@ class Model {
   //Construct grade object from grade ID
   public function constructGradeFromGradeID($gradeIDFromSession) {
     $sessionGradeID = $gradeIDFromSession;
-    $query = "SELECT * FROM grades WHERE GradeID = '$sessionGradeID'";
+    $query = "SELECT * FROM grades WHERE GradeID = ?";
     try {
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$sessionGradeID]);
       if ($rows && $rows->rowCount() ==1) {
         $row=$rows->fetch();
         $grade = new Grade($row["GradeID"], $row["Grade"], $row["JobTitle"]);
@@ -151,9 +151,10 @@ class Model {
 
   public function constructBaseLocationFromBaseLocationID($baseLocationIDFromSession) {
     $sessionBaseLocationID = $baseLocationIDFromSession;
-    $query = "SELECT * FROM baselocations WHERE BaseLocationID = '$sessionBaseLocationID'";
+    $query = "SELECT * FROM baselocations WHERE BaseLocationID = ?";
     try {
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$sessionBaseLocationID]);
       if ($rows && $rows->rowCount() ==1) {
         $row=$rows->fetch();
         $baseLocation = new BaseLocation($row["BaseLocationID"], $row["Name"], $row["City"], $row["Country"]);
@@ -168,9 +169,10 @@ class Model {
 
   public function constructBusinessUnitFromBusinessUnitID($businessUnitIDFromSession) {
     $sessionBusinessUnitID = $businessUnitIDFromSession;
-    $query = "SELECT * FROM businessunits WHERE BusinessUnitID = '$sessionBusinessUnitID'";
+    $query = "SELECT * FROM businessunits WHERE BusinessUnitID = ?";
     try {
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$sessionBusinessUnitID]);
       if ($rows && $rows->rowCount() ==1) {
         $row=$rows->fetch();
         $businessUnit = new BusinessUnit($row["BusinessUnitID"], $row["Unit"]);
@@ -185,10 +187,11 @@ class Model {
 
   //get all projects associated with the logged in users
   public function getAllProjectsAssociatedWithThisUser($sessionEmployeeNumber) {
-    $query = "SELECT * FROM projects WHERE EmployeeNumber = '$sessionEmployeeNumber'";
+    $query = "SELECT * FROM projects WHERE EmployeeNumber = ?";
     try {
       $projectsArray = array();
-      $result = $this->pdo-> query($query);
+      $result = $this->pdo->prepare($query);
+      $result->execute([$sessionEmployeeNumber]);
       if ($result && $result->rowCount() > 0) {
         foreach($result as $row) {
           $project = new Project($row["ProjectID"], $row["EmployeeNumber"], $row["ProjectName"], $row["Customer"], $row["ProjectDescription"], $row["FromDate"], $row["ToDate"]);
@@ -208,10 +211,11 @@ class Model {
 
   //get all projects associated with the logged in users
   public function getAllEducationAssociatedWithThisUser($sessionEmployeeNumber) {
-    $query = "SELECT * FROM education WHERE EmployeeNumber = '$sessionEmployeeNumber'";
+    $query = "SELECT * FROM education WHERE EmployeeNumber = ?";
     try {
       $educationArray = array();
-      $result = $this->pdo-> query($query);
+      $result = $this->pdo->prepare($query);
+      $result->execute([$sessionEmployeeNumber]);
       if ($result && $result->rowCount() > 0) {
         foreach($result as $row) {
           $education = new Education($row["EducationID"], $row["EmployeeNumber"], $row["Subject"], $row["Level"], $row["FromDate"], $row["ToDate"]);
@@ -230,10 +234,11 @@ class Model {
   }
 
   public function getAllSkillsAssociatedWithThisUser($sessionEmployeeNumber) {
-    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.EmployeeNumber = '$sessionEmployeeNumber'";
+    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.EmployeeNumber = ?";
     try {
       $userToSkillsArray = array();
-      $result = $this->pdo-> query($query);
+      $result = $this->pdo->prepare($query);
+      $result->execute([$sessionEmployeeNumber]);
       if ($result && $result->rowCount() > 0) {
         foreach($result as $row) {
           $userToSkill = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
@@ -252,10 +257,11 @@ class Model {
   }
 
   public function getAllEmploymentAssociatedWithThisUser($sessionEmployeeNumber) {
-    $query = "SELECT * FROM employment WHERE EmployeeNumber = '$sessionEmployeeNumber'";
+    $query = "SELECT * FROM employment WHERE EmployeeNumber = ?";
     try {
       $employmentArray = array();
-      $result = $this->pdo-> query($query);
+      $result = $this->pdo->prepare($query);
+      $result->execute([$sessionEmployeeNumber]);
       if ($result && $result->rowCount() > 0) {
         foreach($result as $row) {
           $employment = new Employment($row["EmploymentID"], $row["EmployeeNumber"], $row["Company"], $row["FromDate"] , $row["ToDate"]);
@@ -347,8 +353,9 @@ class Model {
 
   public function addNewProjectToDatabase($projectID, $employeeNumber, $projectName, $customer, $projectDescription, $fromDate, $toDate) {
     try {
-      $execute = "INSERT INTO projects (ProjectID, EmployeeNumber, ProjectName, Customer, ProjectDescription, FromDate, ToDate) VALUES ('$projectID', '$employeeNumber', '$projectName', '$customer', '$projectDescription', '$fromDate', '$toDate')";
-      $this->pdo->exec($execute);
+      $stmt = "INSERT INTO projects (ProjectID, EmployeeNumber, ProjectName, Customer, ProjectDescription, FromDate, ToDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      $result = $this->pdo->prepare($stmt);
+      $result->execute([$projectID, $employeeNumber, $projectName, $customer, $projectDescription, $fromDate, $toDate]);
       echo 'Project has been added.';
     }
     catch (PDOException $ex) {
@@ -359,8 +366,9 @@ class Model {
 
   public function addNewEducationToDatabase($educationID, $employeeNumber, $subject, $level, $fromDate, $toDate) {
     try {
-      $execute = "INSERT INTO education (EducationID, EmployeeNumber, Subject, Level, FromDate, ToDate) VALUES ('$educationID', '$employeeNumber', '$subject', '$level', '$fromDate', '$toDate')";
-      $this->pdo->exec($execute);
+      $stmt = "INSERT INTO education (EducationID, EmployeeNumber, Subject, Level, FromDate, ToDate) VALUES (?, ?, ?, ?, ?, ?)";
+      $result = $this->pdo->prepare($stmt);
+      $result->execute([$educationID, $employeeNumber, $subject, $level, $fromDate, $toDate]);
       echo 'Education record has been added.';
     }
     catch (PDOException $ex) {
@@ -370,15 +378,17 @@ class Model {
   }
 
   public function addNewUserToSkillToDatabase($userToSkillID, $employeeNumber, $skillName, $isCoreSkill, $competencyLevel, $experienceInYears) {
-    $query = "SELECT * FROM skills WHERE SkillName = '$skillName'";
+    $query = "SELECT * FROM skills WHERE SkillName = ?";
     try {
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$skillName]);
       if ($rows && $rows->rowCount() == 1) {
         $row=$rows->fetch();
         $skillIDFromDatabase = $row["SkillID"];
 
-        $execute = "INSERT INTO userstoskills (UserToSkillID, EmployeeNumber, SkillID, IsCoreSkill, CompetencyLevel, ExperienceInYears) VALUES ('$userToSkillID', '$employeeNumber', '$skillIDFromDatabase', '$isCoreSkill', '$competencyLevel', '$experienceInYears')";
-        $this->pdo->exec($execute);
+        $stmt = "INSERT INTO userstoskills (UserToSkillID, EmployeeNumber, SkillID, IsCoreSkill, CompetencyLevel, ExperienceInYears) VALUES (?, ?, ?, ?, ?, ?)";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$userToSkillID, $employeeNumber, $skillIDFromDatabase, $isCoreSkill, $competencyLevel, $experienceInYears]);
         echo 'Skill record has been added.';
       }
       else {
@@ -395,8 +405,9 @@ class Model {
 
   public function addNewEmploymentToDatabase($employmentID, $employeeNumber, $company, $fromDate, $toDate) {
     try {
-      $execute = "INSERT INTO employment (EmploymentID, EmployeeNumber, Company, FromDate, ToDate) VALUES ('$employmentID', '$employeeNumber', '$company', '$fromDate', '$toDate')";
-      $this->pdo->exec($execute);
+      $stmt = "INSERT INTO employment (EmploymentID, EmployeeNumber, Company, FromDate, ToDate) VALUES (?, ?, ?, ?, ?)";
+      $result = $this->pdo->prepare($stmt);
+      $result->execute([$employmentID, $employeeNumber, $company, $fromDate, $toDate]);
       echo 'Employment record has been added.';
     }
     catch (PDOException $ex) {
@@ -407,8 +418,9 @@ class Model {
 
   public function editProjectDetails($projectID, $projectName, $customer, $projectDescription, $fromDate, $toDate) {
     try {
-      $execute = "UPDATE projects SET ProjectName='$projectName', Customer='$customer', ProjectDescription='$projectDescription', FromDate='$fromDate', ToDate='$toDate' WHERE ProjectID='$projectID'";
-      $this->pdo->exec($execute);
+      $stmt = "UPDATE projects SET ProjectName=?, Customer=?, ProjectDescription=?, FromDate=?, ToDate=? WHERE ProjectID=?";
+      $result = $this->pdo->prepare($stmt);
+      $result->execute([$projectName, $customer, $projectDescription, $fromDate, $toDate, $projectID]);
       echo "Updated Project Details";
     }
     catch (PDOException $ex) {
@@ -419,8 +431,9 @@ class Model {
 
   public function editEducationDetails($educationID, $subject, $level, $fromDate, $toDate) {
     try {
-      $execute = "UPDATE education SET Subject='$subject', Level='$level', FromDate='$fromDate', ToDate='$toDate' WHERE EducationID='$educationID'";
-      $this->pdo->exec($execute);
+      $stmt = "UPDATE education SET Subject=?, Level=?, FromDate=?, ToDate=? WHERE EducationID=?";
+      $result = $this->pdo->prepare($stmt);
+      $result->execute([$subject, $level, $fromDate, $toDate, $educationID]);
       echo "Updated Education Details";
     }
     catch (PDOException $ex) {
@@ -430,15 +443,17 @@ class Model {
   }
 
   public function editUserToSkillDetails($userToSkillID, $employeeNumber, $skillName, $isCoreSkill, $competencyLevel, $experienceInYears) {
-    $query = "SELECT * FROM skills WHERE SkillName = '$skillName'";
+    $query = "SELECT * FROM skills WHERE SkillName = ?";
     try {
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$skillName]);
       if ($rows && $rows->rowCount() == 1) {
         $row=$rows->fetch();
         $skillIDFromDatabase = $row["SkillID"];
 
-        $execute = "UPDATE userstoskills SET SkillID='$skillIDFromDatabase', IsCoreSkill='$isCoreSkill', CompetencyLevel='$competencyLevel', ExperienceInYears='$experienceInYears' WHERE UserToSkillID='$userToSkillID'";
-        $this->pdo->exec($execute);
+        $stmt = "UPDATE userstoskills SET SkillID=?, IsCoreSkill=?, CompetencyLevel=?, ExperienceInYears=? WHERE UserToSkillID=?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$skillIDFromDatabase, $isCoreSkill, $competencyLevel, $experienceInYears, $userToSkillID]);
         echo "Updated Skill Details";
       }
       else {
@@ -455,8 +470,9 @@ class Model {
 
   public function editEmploymentDetails($employmentID, $company, $fromDate, $toDate) {
     try {
-      $execute = "UPDATE employment SET Company='$company', FromDate='$fromDate', ToDate='$toDate' WHERE EmploymentID='$employmentID'";
-      $this->pdo->exec($execute);
+      $stmt = "UPDATE employment SET Company=?, FromDate=?, ToDate=? WHERE EmploymentID=?";
+      $result = $this->pdo->prepare($stmt);
+      $result->execute([$company, $fromDate, $toDate, $employmentID]);
       echo "Updated Employment Details";
     }
     catch (PDOException $ex) {
@@ -475,9 +491,10 @@ class Model {
 
   public function getProjectToBeEdited($projectID) {
     $projectIDToBeEdited = $projectID;
-    $query = "SELECT * FROM projects WHERE ProjectID = '$projectIDToBeEdited'";
+    $query = "SELECT * FROM projects WHERE ProjectID = ?";
     try {
-      $rows = $this->pdo->query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$projectIDToBeEdited]);
       if ($rows && $rows->rowCount() == 1) {
         $row=$rows->fetch();
         $projectObject = new Project($row["ProjectID"], $row["EmployeeNumber"], $row["ProjectName"], $row["Customer"], $row["ProjectDescription"], $row["FromDate"], $row["ToDate"]);
@@ -500,9 +517,10 @@ class Model {
 
   public function getEducationToBeEdited($educationID) {
     $educationIDToBeEdited = $educationID;
-    $query = "SELECT * FROM education WHERE EducationID = '$educationIDToBeEdited'";
+    $query = "SELECT * FROM education WHERE EducationID = ?";
     try {
-      $rows = $this->pdo->query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$educationIDToBeEdited]);
       if ($rows && $rows->rowCount() == 1) {
         $row=$rows->fetch();
         $educationObject = new Education($row["EducationID"], $row["EmployeeNumber"], $row["Subject"], $row["Level"], $row["FromDate"], $row["ToDate"]);
@@ -525,9 +543,10 @@ class Model {
 
   public function getUserToSkillToBeEdited($userToSkillID) {
     $userToSkillIDToBeEdited = $userToSkillID;
-    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.UserToSkillID = '$userToSkillIDToBeEdited'";
+    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.UserToSkillID = ?";
     try {
-      $rows = $this->pdo->query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$userToSkillIDToBeEdited]);
       if ($rows && $rows->rowCount() == 1) {
         $row=$rows->fetch();
         $userToSkillObject = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
@@ -553,9 +572,10 @@ class Model {
 
   public function getEmploymentToBeEdited($employmentID) {
     $employmentIDToBeEdited = $employmentID;
-    $query = "SELECT * FROM employment WHERE EmploymentID = '$employmentIDToBeEdited'";
+    $query = "SELECT * FROM employment WHERE EmploymentID = ?";
     try {
-      $rows = $this->pdo->query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$employmentIDToBeEdited]);
       if ($rows && $rows->rowCount() == 1) {
         $row=$rows->fetch();
         $employmentObject = new Employment($row["EmploymentID"], $row["EmployeeNumber"], $row["Company"], $row["FromDate"], $row["ToDate"]);
@@ -572,8 +592,9 @@ class Model {
     try {
       if(is_numeric($projectID)) {
         $projectIDToDelete = $projectID;
-        $execute = "DELETE FROM projects WHERE ProjectID = '$projectIDToDelete'";
-        $this->pdo->exec($execute);
+        $stmt = "DELETE FROM projects WHERE ProjectID = ?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$projectID]);
         echo 'Deleted Project Record';
       }
     }
@@ -587,8 +608,9 @@ class Model {
     try {
       if(is_numeric($educationID)) {
         $educationIDToDelete = $educationID;
-        $execute = "DELETE FROM education WHERE EducationID = '$educationIDToDelete'";
-        $this->pdo->exec($execute);
+        $stmt = "DELETE FROM education WHERE EducationID = ?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$educationID]);
         echo 'Deleted Education Record';
       }
     }
@@ -602,8 +624,9 @@ class Model {
     try {
       if(is_numeric($userToSkillID)) {
         $userToSkillIDToDelete = $userToSkillID;
-        $execute = "DELETE FROM userstoskills WHERE UserToSkillID = '$userToSkillIDToDelete'";
-        $this->pdo->exec($execute);
+        $stmt = "DELETE FROM userstoskills WHERE UserToSkillID = ?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$userToSkillID]);
         echo 'Deleted Skill Record';
       }
     }
@@ -617,8 +640,9 @@ class Model {
     try {
       if(is_numeric($employmentID)) {
         $employmentIDToDelete = $employmentID;
-        $execute = "DELETE FROM employment WHERE EmploymentID = '$employmentIDToDelete'";
-        $this->pdo->exec($execute);
+        $stmt = "DELETE FROM employment WHERE EmploymentID = ?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$employmentIDToDelete]);
         echo 'Deleted Employment Record';
       }
     }
@@ -629,10 +653,11 @@ class Model {
   }
 
   public function getUserToSkillArrayByAdvancedSkillSearch($skillName, $minimumExperienceInYears, $competencyLevel) {
-    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE s.SkillName = '$skillName' AND CompetencyLevel = '$competencyLevel' AND ExperienceInYears >= '$minimumExperienceInYears'";
+    $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE s.SkillName = ? AND CompetencyLevel = ? AND ExperienceInYears >= ?";
     try {
       $usersToSkillsArray = array();
-      $rows = $this->pdo-> query($query);
+      $rows = $this->pdo->prepare($query);
+      $rows->execute([$skillName, $minimumExperienceInYears, $competencyLevel]);
       if ($rows && $rows->rowCount() > 0) {
         foreach ($rows as $row) {
           $usertoskill = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
@@ -684,9 +709,10 @@ class Model {
 
   public function getProjectByProjectID($projectID) {
     if (is_numeric($projectID)) {
-      $query = "SELECT * FROM projects WHERE ProjectID = $projectID";
+      $query = "SELECT * FROM projects WHERE ProjectID = ?";
       try {
-        $rows = $this->pdo->query($query);
+        $rows = $this->pdo->prepare($query);
+        $rows->execute([$projectID]);
         if ($rows && $rows->rowCount() == 1) {
           $row=$rows->fetch();
           $projectObject = new Project($row["ProjectID"], $row["EmployeeNumber"], $row["ProjectName"], $row["Customer"], $row["ProjectDescription"], $row["FromDate"], $row["ToDate"]);
@@ -702,9 +728,10 @@ class Model {
 
   public function getEducationByEducationID($educationID) {
     if (is_numeric($educationID)) {
-      $query = "SELECT * FROM education WHERE EducationID = $educationID";
+      $query = "SELECT * FROM education WHERE EducationID = ?";
       try {
-        $rows = $this->pdo->query($query);
+        $rows = $this->pdo->prepare($query);
+        $rows->execute([$educationID]);
         if ($rows && $rows->rowCount() == 1) {
           $row=$rows->fetch();
           $educationObject = new Education($row["EducationID"], $row["EmployeeNumber"], $row["Subject"], $row["Level"], $row["FromDate"], $row["ToDate"]);
@@ -720,9 +747,10 @@ class Model {
 
   public function getUserToSkillByUserToSkillID($userToSkillID) {
     if (is_numeric($userToSkillID)) {
-      $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.UserToSkillID = '$userToSkillID'";
+      $query = "SELECT u.UserToSkillID, u.EmployeeNumber, u.SkillID, s.SkillName, s.SkillType, u.IsCoreSkill, u.CompetencyLevel, u.ExperienceInYears FROM userstoskills u INNER JOIN skills s ON u.SkillID = s.SkillID WHERE u.UserToSkillID = ?";
       try {
-        $rows = $this->pdo->query($query);
+        $rows = $this->pdo->prepare($query);
+        $rows->execute([$userToSkillID]);
         if ($rows && $rows->rowCount() == 1) {
           $row=$rows->fetch();
           $userToSkillObject = new UserToSkill($row["UserToSkillID"], $row["EmployeeNumber"], $row["SkillID"], $row["SkillName"], $row["SkillType"], $row["IsCoreSkill"], $row["CompetencyLevel"] , $row["ExperienceInYears"]);
@@ -738,9 +766,10 @@ class Model {
 
   public function getEmploymentByEmploymentID($employmentID) {
     if (is_numeric($employmentID)) {
-      $query = "SELECT * FROM employment WHERE EmploymentID = $employmentID";
+      $query = "SELECT * FROM employment WHERE EmploymentID = ?";
       try {
-        $rows = $this->pdo->query($query);
+        $rows = $this->pdo->prepare($query);
+        $rows->execute([$employmentID]);
         if ($rows && $rows->rowCount() == 1) {
           $row=$rows->fetch();
           $employmentObject = new Employment($row["EmploymentID"], $row["EmployeeNumber"], $row["Company"], $row["FromDate"], $row["ToDate"]);
