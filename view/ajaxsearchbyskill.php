@@ -12,6 +12,7 @@ if (isset($_POST['search'])) {
   $tempConnection = mysqli_connect($servername, $username, $password, $database);
 
   $q = htmlspecialchars($_POST['q']);
+  $q = mysqli_real_escape_string($tempConnection, $q);
 
   $SQLquery = "SELECT * FROM skills WHERE SkillName LIKE '%$q%'";
 
