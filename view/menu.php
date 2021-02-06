@@ -49,8 +49,17 @@
           <!--Manage my cv - all users -->
           <li class="navtop"><a href="?page=managecv">Manage My CV</a></li>
 
-          <!--View records of all the users on the bench - reviewer manager -->
-          <li class="navtop"><a href="?page=searchemployee">Search For Employee</a></li>
+          <?php
+          if (!isset($_SESSION['user']['IsAdmin']) || !isset($_SESSION['user']['IsResourceManager']) || ($_SESSION['user']['IsAdmin'] != 1) || ($_SESSION['user']['IsResourceManager'] != 1)) {
+
+          }
+          else {
+          ?>
+            <!--View records of all the users on the bench - reviewer manager -->
+            <li class="navtop"><a href="?page=searchemployee">Search For Employee</a></li>
+          <?php
+          }
+          ?>
 
           <!--Logout - all users -->
           <li class="navtop"><a href="?page=logout">Logout</a></li>
