@@ -5,7 +5,17 @@ if (!isset($_SESSION)) {
 }
 
 if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username'])) {
-
+  if (($_SESSION['user']['IsAdmin'] != 1) || ($_SESSION['user']['IsResourceManager'] != 1)) {
+    echo '<div class="container">';
+    echo '<h1>Search For Employee</h1>';
+    echo '<div class="row">';
+    echo '<div class="col-xs-12">';
+    echo '<p>You do not have permission to search for employees.</p>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+  }
+  else {
 
 ?>
 
@@ -57,6 +67,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
   });
 </script>
 
-<?php
+  <?php
+  }
 }
 ?>
