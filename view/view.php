@@ -14,7 +14,11 @@ class View {
   function display() {
 
     if ((isset($_GET["page"])) && (strpos($_GET["page"], 'generatePDF') !== false)) {
-      $this->page = "view/" . $_GET["page"] . ".php";
+      $queryString = $_GET["page"];
+      $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
+      $extractedQueryString = $extractedQueryString + 0;
+      $this->model->setIDForGeneratePDF($extractedQueryString);
+      $this->page = "view/generatePDF.php";
       require($this->page);
     }
     else if (!isset($_GET["page"])) {

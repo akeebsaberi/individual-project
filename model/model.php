@@ -30,6 +30,8 @@ class Model {
 
   private $employeeIDToView;
 
+  private $IDForGeneratePDF;
+
   //Constructor for Model class
   public function __construct($server, $dbname, $username, $password) {
     $this->pdo = null;
@@ -789,6 +791,14 @@ class Model {
 
   public function getEmployeeIDToView() {
     return $this->employeeIDToView;
+  }
+
+  public function setIDForGeneratePDF($employeeID) {
+    $this->IDForGeneratePDF = $employeeID;
+  }
+
+  public function getIDForGeneratePDF() {
+    return $this->IDForGeneratePDF;
   }
 
 }
