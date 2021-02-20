@@ -573,4 +573,70 @@ class ModelTest extends TestCase {
     $this->assertEquals(13, $testHighestUserToSkillID);
   }
 
+  public function testGetProjectByProjectID_validProjectID() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $projectTestObject = $testModel->getProjectByProjectID(8);
+
+    $this->assertEquals(8, $projectTestObject->projectID);
+    $this->assertEquals(16, $projectTestObject->employeeNumber);
+    $this->assertEquals("Unit Test Project", $projectTestObject->projectName);
+    $this->assertEquals("Unit Test Project Customer", $projectTestObject->customer);
+    $this->assertEquals("This is the project record for unit testing.", $projectTestObject->projectDescription);
+    $this->assertEquals("2015-01-01", $projectTestObject->fromDate);
+    $this->assertEquals("2015-12-31", $projectTestObject->toDate);
+  }
+
+  public function testGetEducationByEducationID_validEducationID() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $educationTestObject = $testModel->getEducationByEducationID(4);
+
+    $this->assertEquals(4, $educationTestObject->educationID);
+    $this->assertEquals(16, $educationTestObject->employeeNumber);
+    $this->assertEquals("Unit Test Education 1", $educationTestObject->subject);
+    $this->assertEquals("Unit Test Level", $educationTestObject->level);
+    $this->assertEquals("2010-01-01", $educationTestObject->fromDate);
+    $this->assertEquals("2013-01-01", $educationTestObject->toDate);
+  }
+
+  public function testGetUserToSkillByUserToSkillID_validUserToSkillID() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $userToSkillTestObject = $testModel->getUserToSkillByUserToSkillID(12);
+
+    $this->assertEquals(12, $userToSkillTestObject->userToSkillID);
+    $this->assertEquals(16, $userToSkillTestObject->employeeNumber);
+    $this->assertEquals(0, $userToSkillTestObject->skillID);
+    $this->assertEquals("Java", $userToSkillTestObject->skillName);
+    $this->assertEquals("Technology", $userToSkillTestObject->skillType);
+    $this->assertEquals(1, $userToSkillTestObject->isCoreSkill);
+    $this->assertEquals(2, $userToSkillTestObject->competencyLevel);
+    $this->assertEquals(3, $userToSkillTestObject->experienceInYears);
+  }
+
+  public function testGetEmploymentByEmploymentID_validEmploymentID() {
+    require_once 'model\model.php';
+
+    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
+    $testModel->connect();
+
+    $employmentTestObject = $testModel->getEmploymentByEmploymentID(3);
+
+    $this->assertEquals(3, $employmentTestObject->employmentID);
+    $this->assertEquals(16, $employmentTestObject->employeeNumber);
+    $this->assertEquals("Unit Test Company 1", $employmentTestObject->company);
+    $this->assertEquals("2014-01-01", $employmentTestObject->fromDate);
+    $this->assertEquals("2015-01-01", $employmentTestObject->toDate);
+  }
+
 }
