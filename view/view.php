@@ -21,6 +21,14 @@ class View {
       $this->page = "view/generatePDF.php";
       require($this->page);
     }
+    else if ((isset($_GET["page"])) && (strpos($_GET["page"], 'generateCVexternalPDF') !== false)) {
+      $queryString = $_GET["page"];
+      $extractedQueryString = substr($queryString, strpos($queryString, "?") + 1);
+      $extractedQueryString = $extractedQueryString + 0;
+      $this->model->setIDForGenerateExternalPDF($extractedQueryString);
+      $this->page = "view/generateCVexternalPDF.php";
+      require($this->page);
+    }
     else if (!isset($_GET["page"])) {
       require_once("menu.php");
     }
@@ -97,6 +105,14 @@ class View {
           $queryString = $queryString + 0;
           $this->model->setEmployeeIDToView($queryString);
           $this->page = "view/viewuserbyusername.php";
+          require($this->page);
+        }
+        else if (strpos($_GET["page"], 'generateexternalPDFoptions') !== false) {
+          $queryString = $_GET["page"];
+          $queryString = substr($queryString, strpos($queryString, "?") + 1);
+          $queryString = $queryString + 0;
+          $this->model->setIDForGenerateExternalPDF($queryString);
+          $this->page = "view/generateexternalPDFoptions.php";
           require($this->page);
         }
         else {

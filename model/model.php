@@ -31,6 +31,7 @@ class Model {
   private $employeeIDToView;
 
   private $IDForGeneratePDF;
+  private $IDForGenerateExternalPDF;
 
   //Constructor for Model class
   public function __construct($server, $dbname, $username, $password) {
@@ -799,6 +800,112 @@ class Model {
 
   public function getIDForGeneratePDF() {
     return $this->IDForGeneratePDF;
+  }
+
+  public function setIDForGenerateExternalPDF($employeeID) {
+    $this->IDForGenerateExternalPDF = $employeeID;
+  }
+
+  public function getIDForGenerateExternalPDF() {
+    return $this->IDForGenerateExternalPDF;
+  }
+
+  public function processExternalPDFOptions($externalPDFOptions) {
+
+    if ($externalPDFOptions == 0) {
+      $checkboxBaseLocation = 0;
+      $checkboxBusinessUnit = 0;
+      $checkboxGrade = 0;
+      $checkboxLineManager = 0;
+      $checkboxResourceManager = 0;
+      $checkboxReviewerManager = 0;
+      $checkboxProjects = 0;
+      $checkboxEducation = 0;
+      $checkboxSkills = 0;
+      $checkboxEmployment = 0;
+    }
+    else {
+      if (in_array("baselocation", $externalPDFOptions)) {
+        //$this->checkboxBaseLocation = 1;
+        $_SESSION['checkbox_base_location'] = 1;
+      }
+      else if (!in_array("baselocation", $externalPDFOptions)){
+        //$this->checkboxBaseLocation = 0;
+        $_SESSION['checkbox_base_location'] = 0;
+      }
+      if (in_array("businessunit", $externalPDFOptions)) {
+        //$this->checkboxBusinessUnit = 1;
+        $_SESSION['checkbox_business_unit'] = 1;
+      }
+      else {
+        //$this->checkboxBusinessUnit = 0;
+        $_SESSION['checkbox_business_unit'] = 0;
+      }
+      if (in_array("grade", $externalPDFOptions)) {
+        //$this->checkboxGrade = 1;
+        $_SESSION['checkbox_grade'] = 1;
+      }
+      else {
+        //$this->checkboxGrade = 0;
+        $_SESSION['checkbox_grade'] = 0;
+      }
+      if (in_array("linemanager", $externalPDFOptions)) {
+        //$this->checkboxLineManager = 1;
+        $_SESSION['checkbox_line_manager'] = 1;
+      }
+      else {
+        //$this->checkboxLineManager = 0;
+        $_SESSION['checkbox_line_manager'] = 0;
+      }
+      if (in_array("resourcemanager", $externalPDFOptions)) {
+        //$this->checkboxResourceManager = 1;
+        $_SESSION['checkbox_resource_manager'] = 1;
+      }
+      else {
+        //$this->checkboxResourceManager = 0;
+        $_SESSION['checkbox_resource_manager'] = 0;
+      }
+      if (in_array("reviewermanager", $externalPDFOptions)) {
+        //$this->checkboxReviewerManager = 1;
+        $_SESSION['checkbox_reviewer_manager'] = 1;
+      }
+      else {
+        //$this->checkboxReviewerManager = 0;
+        $_SESSION['checkbox_reviewer_manager'] = 0;
+      }
+      if (in_array("project", $externalPDFOptions)) {
+        //$this->checkboxProjects = 1;
+        $_SESSION['checkbox_project'] = 1;
+      }
+      else {
+        //$this->checkboxProjects = 0;
+        $_SESSION['checkbox_project'] = 0;
+      }
+      if (in_array("education", $externalPDFOptions)) {
+        //$this->checkboxEducation = 1;
+        $_SESSION['checkbox_education'] = 1;
+      }
+      else {
+        //$this->checkboxEducation = 0;
+        $_SESSION['checkbox_education'] = 0;
+      }
+      if (in_array("skills", $externalPDFOptions)) {
+        //$this->checkboxSkills = 1;
+        $_SESSION['checkbox_skills'] = 1;
+      }
+      else {
+        //$this->checkboxSkills = 0;
+        $_SESSION['checkbox_skills'] = 0;
+      }
+      if (in_array("employment", $externalPDFOptions)) {
+        //$this->checkboxEmployment = 1;
+        $_SESSION['checkbox_employment'] = 1;
+      }
+      else {
+        //$this->checkboxEmployment = 0;
+        $_SESSION['checkbox_employment'] = 0;
+      }
+    }
   }
 
 }

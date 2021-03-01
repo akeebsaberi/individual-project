@@ -417,9 +417,18 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
       </div>
 
       <div class="container">
-        <?php
-        echo '<a href="?page=generatePDF?' . $employeeIDToSearch . '" class="btn btn-info" role="button">Export to Internal PDF</a>'
-        ?>
+        <div class="row">
+          <div class="col-xs-offset-3 col-xs-4">
+            <?php
+            echo '<a href="?page=generatePDF?' . $employeeIDToSearch . '" class="btn btn-info" role="button">Export to Internal PDF</a>';
+            ?>
+          </div>
+          <div class="col-xs-4">
+            <?php
+            echo '<a href="?page=generateexternalPDFoptions?' . $employeeIDToSearch . '" class="btn btn-info" role="button">Export to External PDF</a>';
+            ?>
+          </div>
+        </div>
       </div>
 
     <?php

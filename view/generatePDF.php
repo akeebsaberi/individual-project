@@ -88,6 +88,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
   }
 
   $html .= '<br />';
+
   $html .= '<h4>Education</h4>';
 
   if ($educationResult == 0) {
@@ -108,6 +109,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
   }
 
   $html .= '<br />';
+
   $html .= '<h4>Skills</h4>';
 
   if ($userToSkillsResult == 0) {
@@ -122,6 +124,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
   }
 
   $html .= '<br />';
+  
   $html .= '<h4>Employment</h4>';
 
   if ($employmentResult == 0) {
