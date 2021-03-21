@@ -48,7 +48,7 @@ else {
   		<input type="text" name="username" id="loginUsername"/> <br><br>
   		<label for="loginPassword">Please enter your password</label>
   		<input type="password" name="password" id="loginPassword"/>
-      <input type="submit" name="login" value="login">
+      <input type="submit" name="login" value="Login">
   	</div>
   </form>
 </div>
