@@ -1,6 +1,18 @@
 <?php
 
-//Education object - corresponds to an education record in the education table in the database
+/**
+*
+* PHP Version 7.4.3
+*
+* @author   Akeeb Saberi (saberia@aston.ac.uk), Aston University Candidate Number 991554
+*
+*/
+
+/**
+*
+* Education class to model an Education record
+*
+*/
 class Education {
   private $educationID = null;
   private $employeeNumber = null;
@@ -9,7 +21,15 @@ class Education {
   private $fromDate = null;
   private $toDate = null;
 
-  //Instantiates an education object with the given education details
+  /**
+  * Class constructor
+  * @param    $educationID      The EducationID of the record
+  * @param    $employeeNumber   The Employee Number of the employee that the education record belongs to
+  * @param    $subject          The name of the subject of the education
+  * @param    $level            The level of education
+  * @param    $fromDate         The start date of the education
+  * @param    $toDate           The end date of the education
+  */
   public function __construct($educationID, $employeeNumber, $subject, $level, $fromDate, $toDate) {
     $this->educationID = $educationID;
     $this->employeeNumber = $employeeNumber;
@@ -19,9 +39,13 @@ class Education {
     $this->toDate = $toDate;
   }
 
-  # __get method
+  /**
+  * Magic accessor function
+  *
+  * @return    $var    The name of the field to be returned
+  */
   public function __get($var){
-	   return $this->$var;
+	  return $this->$var;
   }
 
 }

@@ -1,16 +1,40 @@
 <?php
 
+/**
+*
+* PHP Version 7.4.3
+*
+* @author   Akeeb Saberi (saberia@aston.ac.uk), Aston University Candidate Number 991554
+*
+*/
+
+/**
+*
+* View class to display View webpages based on user interaction and Model manipulation and accessing, as coordinated by the Controller
+*
+* The View displays the right page based on the coordination of the Controller
+*
+*/
 class View {
 
+  /**
+  * Class fields to store the displayed page name and Model class object respectively
+  */
   public $page = null;
   public $model = null;
 
-  //Constructor for View class
+  /**
+  * Class constructor
+  *
+  * @param    $model    Model object to be stored in the model field
+  */
   function __construct($model) {
     $this->model = $model;
   }
 
-  //Display function to display a webpage
+  /**
+  * Function to display the correct view given the GET request for a page or application state
+  */
   function display() {
 
     if ((isset($_GET["page"])) && (strpos($_GET["page"], 'generatePDF') !== false)) {
