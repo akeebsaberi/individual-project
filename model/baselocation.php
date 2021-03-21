@@ -1,13 +1,31 @@
 <?php
 
-//BaseLocation object - corresponds to a base location in the baselocation table in the database
+/**
+*
+* PHP Version 7.4.3
+*
+* @author   Akeeb Saberi (saberia@aston.ac.uk), Aston University Candidate Number 991554
+*
+*/
+
+/**
+*
+* BaseLocation class to model a Base Location record
+*
+*/
 class BaseLocation {
   private $baseLocationID = null;
   private $baseLocationName = null;
   private $city = null;
   private $country = null;
 
-  //Instantiates a base location object with the given base location details
+  /**
+  * Class constructor
+  * @param    $baseLocationID     The BaseLocationID of the record
+  * @param    $baseLocationName   The name of the base location
+  * @param    $city               The city of the base location
+  * @param    $country            The country of the base location
+  */
   public function __construct($baseLocationID, $baseLocationName, $city, $country) {
     $this->baseLocationID = $baseLocationID;
     $this->baseLocationName = $baseLocationName;
@@ -15,9 +33,13 @@ class BaseLocation {
     $this->country = $country;
   }
 
-  # __get method
+  /**
+  * Magic accessor function
+  *
+  * @return    $var    The name of the field to be returned
+  */
   public function __get($var){
-	   return $this->$var;
+	  return $this->$var;
   }
 
 }

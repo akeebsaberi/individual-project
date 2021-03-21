@@ -1,5 +1,14 @@
 <?php
-//Start session if not already started
+
+/**
+*
+* PHP Version 7.4.3
+*
+* @author   Akeeb Saberi (saberia@aston.ac.uk), Aston University Candidate Number 991554
+*
+*/
+
+#Start session if not already started
 if (!isset($_SESSION)) {
   session_start();
 }

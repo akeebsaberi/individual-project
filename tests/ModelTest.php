@@ -1,12 +1,17 @@
 <?php
 
+/**
+*
+* PHP Version 7.4.3
+*
+* @author   Akeeb Saberi (saberia@aston.ac.uk), Aston University Candidate Number 991554
+*
+*/
+
 use PHPUnit\Framework\TestCase;
 
 class ModelTest extends TestCase {
 
-  //Login and Logout Unit Tests
-
-  //Test 1
   public function testGetUserByUsernameAndPassword_validUser() {
     require_once 'model\user.php';
     require_once 'model\model.php';
@@ -112,49 +117,6 @@ class ModelTest extends TestCase {
     //User does not exist, please try again.
     $this->assertNull($testUser);
   }
-
-  /*
-  public function testLogout() {
-    $testModel = new Model("127.0.0.1", "individual_project_db_test", "root", "");
-    $testModel->connect();
-
-    $testUser = $testModel->getUserByUsernameAndPassword('unittest', 'unittestpassword');
-
-    $this->assertEquals(16, $_SESSION['user']['EmployeeNumber']);
-    $this->assertEquals('admin', $_SESSION['user']['FirstName']);
-    $this->assertEquals('test', $_SESSION['user']['Surname']);
-    $this->assertEquals('unittest', $_SESSION['user']['Username']);
-    $this->assertTrue(password_verify('unittestpassword', $_SESSION['user']['Password']));
-    $this->assertEquals(1, $_SESSION['user']['IsResourceManager']);
-    $this->assertEquals(1, $_SESSION['user']['IsAdmin']);
-    $this->assertEquals('2000-01-01', $_SESSION['user']['DateOfBirth']);
-    $this->assertEquals(1, $_SESSION['user']['BaseLocation']);
-    $this->assertEquals(1, $_SESSION['user']['LineManager']);
-    $this->assertEquals(2, $_SESSION['user']['ReviewerManager']);
-    $this->assertEquals(3, $_SESSION['user']['ResourceManager']);
-    $this->assertEquals(1, $_SESSION['user']['BusinessUnit']);
-    $this->assertEquals(1, $_SESSION['user']['Grade']);
-
-    include_once 'view\logout.php';
-
-    $this->assertNull($_SESSION['user']['EmployeeNumber']);
-    $this->assertNull($_SESSION['user']['FirstName']);
-    $this->assertNull($_SESSION['user']['Surname']);
-    $this->assertNull($_SESSION['user']['Username']);
-    $this->assertNull($_SESSION['user']['Password']);
-    $this->assertNull($_SESSION['user']['IsResourceManager']);
-    $this->assertNull($_SESSION['user']['IsAdmin']);
-    $this->assertNull($_SESSION['user']['DateOfBirth']);
-    $this->assertNull($_SESSION['user']['BaseLocation']);
-    $this->assertNull($_SESSION['user']['LineManager']);
-    $this->assertNull($_SESSION['user']['ReviewerManager']);
-    $this->assertNull($_SESSION['user']['ResourceManager']);
-    $this->assertNull($_SESSION['user']['BusinessUnit']);
-    $this->assertNull($_SESSION['user']['Grade']);
-  }
-  */
-
-  //View My CV Unit Tests
 
   public function testGetUserByEmployeeNumber_validEmployeeNumber() {
     require_once 'model\user.php';
