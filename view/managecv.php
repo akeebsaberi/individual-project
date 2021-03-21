@@ -221,7 +221,7 @@ if (isset($_SESSION['user']['Username']) && !empty($_SESSION['user']['Username']
 
                 <?php
                 if ($employmentResult == 0) {
-                  echo '<p>You currently have no skills to display. Add a skill to get started.</p>';
+                  echo '<p>You currently have no employment records to display. Add an employment record to get started.</p>';
                 }
                 else {
                 ?>
