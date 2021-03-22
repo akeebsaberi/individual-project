@@ -59,15 +59,17 @@
           <li class="navtop"><a href="?page=managecv">Manage My CV</a></li>
 
           <?php
+          /*
           if (!isset($_SESSION['user']['IsAdmin']) || !isset($_SESSION['user']['IsResourceManager']) || ($_SESSION['user']['IsAdmin'] != 1) || ($_SESSION['user']['IsResourceManager'] != 1)) {
 
           }
           else {
+          */
           ?>
-            <!--View records of all the users on the bench - reviewer manager -->
+            <!--Search for employees by name, skill or project - resource manager -->
             <li class="navtop"><a href="?page=searchemployee">Search For Employee</a></li>
           <?php
-          }
+          //}
           ?>
 
           <!--Logout - all users -->
